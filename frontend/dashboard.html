@@ -641,9 +641,9 @@
 
     <script>
         // API Configuration - Update this URL for your Render backend
-        const API_BASE_URL = window.location.hostname === 'localhost' 
-            ? 'http://localhost:8000' 
-            : 'https://gs-razorpay-project-backend.onrender.com/'; // Replace with your actual Render URL
+        const API_BASE_URL = window.location.hostname === 'localhost'
+            ? 'http://localhost:8000'
+            : 'https://gs-razorpay-project-backend.onrender.com'; // Your actual Render backend URL
         
         let currentEventId = "evt_192b57";
         let currentName = "Aarav Gupta";
@@ -1273,7 +1273,7 @@
 
         function startDuplexCall() {
             const protocol = API_BASE_URL.startsWith("https") ? "wss:" : "ws:";
-            const wsUrl = protocol + "//" + API_BASE_URL.replace(/^https?:\/\//, "") + "/ws/call/" + currentEventId;
+            const wsUrl = protocol + "//" + API_BASE_URL.replace(/^https?:\/\//, "").replace(/\/$/, "") + "/ws/call/" + currentEventId;
 
             socket = new WebSocket(wsUrl);
 

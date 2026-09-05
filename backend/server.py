@@ -31,7 +31,7 @@ logger = logging.getLogger("DuplexServer")
 app = FastAPI(title="Razorpay Duplex Real-Time Voice Engine")
 
 # CORS Configuration - Update with your Render frontend URL for production
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "https://gs-razorpay-project-backend.onrender.com")
 
 app.add_middleware(
     CORSMiddleware,
@@ -39,6 +39,7 @@ app.add_middleware(
         FRONTEND_URL,
         "http://localhost:3000",  # Local development
         "http://localhost:8000",  # Local development
+        "*",  # Allow all origins for development (remove in production)
     ],
     allow_credentials=True,
     allow_methods=["*"],
