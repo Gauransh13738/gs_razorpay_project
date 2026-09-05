@@ -1,0 +1,20 @@
+{
+  "name": "razorpay-payment-recovery-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for Razorpay Payment Recovery Engine",
+  "main": "dashboard.html",
+  "scripts": {
+    "start": "python -m http.server 3000",
+    "serve": "npx http-server -p 3000 -c-1"
+  },
+  "keywords": [
+    "razorpay",
+    "payment-recovery",
+    "dashboard"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

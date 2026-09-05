@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <title>Razorpay Revenue Recovery Engine — AI Voice & Payment Gateway Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #070913;
+            --bg-surface: #0f1524;
+            --bg-card: #141c2e;
+            --bg-card-hover: #1b263e;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(59, 130, 246, 0.3);
+            --primary-blue: #3b82f6;
+            --primary-indigo: #6366f1;
+            --accent-purple: #8b5cf6;
+            --success-green: #10b981;
+            --warning-amber: #f59e0b;
+            --danger-red: #ef4444;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 24px 32px;
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(59, 130, 246, 0.07) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(99, 102, 241, 0.07) 0%, transparent 40%);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+
+        .brand { display: flex; align-items: center; gap: 14px; }
+        .brand-logo {
+            width: 46px; height: 46px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-indigo));
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; color: white; font-size: 22px;
+            box-shadow: 0 6px 18px rgba(59, 130, 246, 0.35);
+        }
+
+        .brand-title h1 { font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+        .brand-title p { font-size: 12.5px; color: var(--text-muted); font-weight: 500; }
+
+        .header-actions { display: flex; gap: 12px; align-items: center; }
+
+        .btn-audit-logs {
+            background: rgba(255, 255, 255, 0.06); color: var(--text-main);
+            border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 20px;
+            font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
+        }
+        .btn-audit-logs:hover { background: rgba(255, 255, 255, 0.12); border-color: var(--primary-blue); }
+
+        .badge-live {
+            padding: 6px 14px; border-radius: 30px; font-size: 11.5px; font-weight: 700;
+            background: rgba(16, 185, 129, 0.12); color: #34d399;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        .pulse-dot {
+            width: 8px; height: 8px; background-color: #34d399; border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+        }
+
+        /* KPI Row */
+        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 16px; }
+        .stats-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+        @media (max-width: 1100px) { .stats-grid { grid-template-columns: 1fr; } }
+        .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 12px; }
+        .bar-label { width: 140px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .bar-track { flex: 1; height: 8px; background: #0b0f19; border-radius: 99px; overflow: hidden; }
+        .bar-fill { height: 100%; background: linear-gradient(90deg, #3b82f6, #8b5cf6); border-radius: 99px; }
+        .funnel-step { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border-color); font-size: 13px; }
+        .sim-form { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .sim-form label { font-size: 10px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
+        .sim-form select, .sim-form input { width: 100%; background: #0b0f19; color: white; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; font-size: 12px; }
+        .sim-form .full { grid-column: 1 / -1; }
+        
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 18px 20px;
+            transition: all 0.25s ease;
+        }
+
+        .kpi-card:hover {
+            border-color: var(--border-glow);
+            transform: translateY(-2px);
+        }
+
+        .kpi-title { font-size: 11px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .kpi-value { font-size: 24px; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; }
+        .kpi-subtext { font-size: 11.5px; color: var(--success-green); margin-top: 4px; font-weight: 600; }
+
+        /* Studio Grid */
+        .studio-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 24px; margin-bottom: 24px; }
+
+        .panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 22px;
+            display: flex; flex-direction: column;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.25);
+        }
+
+        .panel-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color);
+        }
+
+        .panel-title { font-size: 15px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 8px; }
+
+        /* Phone Frame */
+        .phone-frame {
+            background: #090d18;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex; flex-direction: column; gap: 14px;
+            box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.8);
+            flex: 1;
+            position: relative;
+        }
+
+        /* Modern Online Call Card Styling */
+        .call-card-hero {
+            background: linear-gradient(180deg, rgba(30, 41, 59, 0.7), rgba(11, 15, 25, 0.95));
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            border-radius: 16px;
+            padding: 18px 16px 14px 16px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            position: relative; text-align: center;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .avatar-hero-container {
+            position: relative;
+            width: 72px; height: 72px;
+            margin-bottom: 10px;
+        }
+
+        .avatar-pulse-ring {
+            position: absolute; inset: -6px;
+            border-radius: 50%; border: 2px solid rgba(52, 211, 153, 0.6);
+            animation: pulse-ring 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.9; box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.6); }
+            70% { transform: scale(1.18); opacity: 0; box-shadow: 0 0 0 14px rgba(52, 211, 153, 0); }
+            100% { transform: scale(0.95); opacity: 0; }
+        }
+
+        .avatar-hero-circle {
+            width: 72px; height: 72px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; color: white; font-size: 26px;
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .call-card-details h3 { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 2px; }
+        .call-card-details p { font-size: 12px; color: #60a5fa; font-weight: 600; }
+        .call-card-subtag {
+            background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #93c5fd; font-size: 11px; font-weight: 700;
+            padding: 3px 10px; border-radius: 20px; margin-top: 6px; display: inline-block;
+        }
+
+        /* Sound Wave Bars */
+        .sound-wave-box {
+            display: flex; align-items: center; justify-content: center; gap: 4px;
+            height: 20px; margin: 8px 0;
+        }
+        .wave-bar {
+            width: 4px; height: 6px; background: #34d399; border-radius: 2px;
+            animation: soundWave 1.2s infinite ease-in-out alternate;
+        }
+        .wave-bar:nth-child(1) { animation-delay: 0.1s; height: 10px; }
+        .wave-bar:nth-child(2) { animation-delay: 0.3s; height: 18px; }
+        .wave-bar:nth-child(3) { animation-delay: 0.2s; height: 14px; }
+        .wave-bar:nth-child(4) { animation-delay: 0.4s; height: 20px; }
+        .wave-bar:nth-child(5) { animation-delay: 0.15s; height: 8px; }
+
+        @keyframes soundWave {
+            0% { height: 4px; opacity: 0.4; }
+            100% { height: 20px; opacity: 1; }
+        }
+
+        .call-controls-row {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            width: 100%; margin-top: 8px;
+        }
+
+        .voice-select-hero {
+            background: #0b0f19; color: #60a5fa; border: 1px solid var(--primary-blue);
+            padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; outline: none; cursor: pointer;
+        }
+
+        .btn-persona-tab {
+            flex: 1; padding: 7px 10px; background: transparent; border: none;
+            color: #94a3b8; font-size: 11.5px; font-weight: 700; border-radius: 8px;
+            cursor: pointer; transition: all 0.2s ease;
+        }
+        .btn-persona-tab.active {
+            background: linear-gradient(135deg, #2563eb, #4f46e5); color: white;
+            box-shadow: 0 2px 10px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Razorpay Payment Link Banner */
+        .razorpay-link-banner {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(99, 102, 241, 0.15));
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            border-radius: 12px; padding: 12px 16px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .plink-info h4 { font-size: 12.5px; font-weight: 800; color: #60a5fa; }
+        .plink-info p { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+        .btn-razorpay-pay {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white; border: none; padding: 8px 16px; border-radius: 10px;
+            font-size: 12px; font-weight: 800; cursor: pointer;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35); transition: all 0.2s ease;
+        }
+        .btn-razorpay-pay:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(16, 185, 129, 0.5); }
+
+        /* Custom Scrollbar Chat Container */
+        .chat-container {
+            flex: 1; overflow-y: auto; max-height: 250px;
+            display: flex; flex-direction: column; gap: 10px;
+            padding-right: 8px; padding-left: 2px;
+        }
+
+        .chat-container::-webkit-scrollbar { width: 5px; }
+        .chat-container::-webkit-scrollbar-track { background: transparent; }
+        .chat-container::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 10px; }
+
+        .chat-bubble {
+            max-width: 82%; padding: 10px 14px; border-radius: 12px;
+            font-size: 12.5px; line-height: 1.45; word-wrap: break-word; overflow-wrap: break-word;
+        }
+        .bubble-agent { background: #1e293b; color: #f8fafc; align-self: flex-start; border-bottom-left-radius: 2px; border: 1px solid #334155; }
+        .bubble-customer { background: #312e81; color: #e0e7ff; align-self: flex-end; border-bottom-right-radius: 2px; border: 1px solid #4338ca; }
+        .speaker-label { font-size: 9.5px; font-weight: 800; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .label-agent { color: #60a5fa; }
+        .label-customer { color: #c084fc; }
+
+        .btn-talk-agent {
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            color: white; border: none; padding: 12px 18px; border-radius: 12px;
+            font-size: 13.5px; font-weight: 800; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+            width: 100%; margin-top: 4px;
+        }
+        .btn-talk-agent:hover { transform: translateY(-1px); background: linear-gradient(135deg, #1d4ed8, #4338ca); }
+        .btn-talk-agent.active { background: linear-gradient(135deg, #dc2626, #991b1b); }
+
+        .table-container { overflow-x: auto; max-height: 460px; }
+        table { width: 100%; border-collapse: collapse; font-size: 12.5px; text-align: left; }
+        th { background: #0b0f19; color: var(--text-muted); font-weight: 700; padding: 10px 12px; border-bottom: 1px solid var(--border-color); font-size: 11px; text-transform: uppercase; }
+        td { padding: 10px 12px; border-bottom: 1px solid var(--border-color); }
+        .tag { padding: 3px 8px; border-radius: 6px; font-size: 10.5px; font-weight: 700; }
+        .tag-voice { background: rgba(147, 51, 234, 0.2); color: #c084fc; border: 1px solid rgba(192, 132, 252, 0.3); }
+        .tag-recovered { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); }
+
+        .btn-table-action {
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            color: white; border: none; padding: 5px 10px; border-radius: 8px;
+            font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
+        }
+
+        /* Call Window Popup Overlay */
+        .call-modal-card {
+            background: #0f172a;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            border-radius: 24px;
+            width: 440px;
+            max-width: 92vw;
+            padding: 20px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(59, 130, 246, 0.2);
+            display: flex; flex-direction: column; gap: 12px;
+            position: relative;
+            animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0.92); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Razorpay Checkout Modal Simulator */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px);
+            display: none; align-items: center; justify-content: center; z-index: 9999;
+        }
+
+        .razorpay-modal-card {
+            background: #111827; border: 1px solid rgba(59, 130, 246, 0.4);
+            border-radius: 20px; width: 400px; padding: 24px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            display: flex; flex-direction: column; gap: 16px; position: relative;
+        }
+
+        .modal-close { position: absolute; top: 16px; right: 16px; color: #94a3b8; font-size: 18px; cursor: pointer; transition: color 0.2s; }
+        .modal-close:hover { color: white; }
+
+        .rzp-modal-header { display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 14px; }
+        .rzp-badge { width: 36px; height: 36px; background: #2563eb; color: white; font-weight: 800; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+
+        .rzp-option {
+            background: #0b0f19; border: 1px solid var(--border-color); border-radius: 10px; padding: 12px;
+            display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: border-color 0.2s;
+        }
+        .rzp-option:hover, .rzp-option.selected { border-color: var(--primary-blue); background: rgba(59, 130, 246, 0.08); }
+
+        .btn-rzp-complete {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white; border: none; padding: 14px; border-radius: 12px;
+            font-size: 14px; font-weight: 800; cursor: pointer; text-align: center;
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4); margin-top: 8px;
+        }
+
+        audio#audioPlayer { display: none; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand">
+            <div class="brand-logo">R</div>
+            <div class="brand-title">
+                <h1>Razorpay AI Revenue Recovery Engine</h1>
+                <p>LangGraph Triage • Razorpay Gateway Integration • Multi-Agent Voice AI</p>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="btn-audit-logs" onclick="showAuditLogs()">📜 View Audit Trail</button>
+            <div class="badge-live">
+                <div class="pulse-dot"></div> Razorpay Webhook Live
+            </div>
+        </div>
+    </header>
+
+    <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-title">Failed Payments</div><div class="kpi-value" id="kpiFailedVolume">₹0</div><div class="kpi-subtext" id="kpiFailedCount">0 events</div></div>
+        <div class="kpi-card"><div class="kpi-title">Still Open</div><div class="kpi-value" id="kpiOpenVolume" style="color: var(--danger-red);">₹0</div><div class="kpi-subtext" id="kpiOpenCount">0 unpaid</div></div>
+        <div class="kpi-card"><div class="kpi-title">Recovered Volume</div><div class="kpi-value" id="kpiRecovered" style="color: var(--success-green);">₹0</div><div class="kpi-subtext" id="kpiRecoveredCount">0 recovered</div></div>
+        <div class="kpi-card"><div class="kpi-title">Retrieval Rate (count)</div><div class="kpi-value" id="kpiRetrievalRate" style="color: #f59e0b;">0%</div><div class="kpi-subtext" id="kpiRetrievalVolume">0% by volume</div></div>
+        <div class="kpi-card"><div class="kpi-title">Auth Rate (test checkout)</div><div class="kpi-value" id="kpiAuthRate" style="color: #60a5fa;">0%</div><div class="kpi-subtext" id="kpiCheckoutMix">0 captured / 0 failed</div></div>
+        <div class="kpi-card"><div class="kpi-title">Net Value Added</div><div class="kpi-value" id="kpiNetValue" style="color: #34d399;">₹0</div><div class="kpi-subtext" id="kpiRoi">0x ROI</div></div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="panel">
+            <div class="panel-header"><div class="panel-title">Failure reasons & retrieval</div></div>
+            <div id="reasonBars">Loading reasons…</div>
+        </div>
+        <div class="panel">
+            <div class="panel-header"><div class="panel-title">Recovery funnel</div></div>
+            <div id="funnelSteps"></div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:10px;">Avg failed ticket <span id="avgTicket">₹0</span> · Intervention cost <span id="intCost">₹0</span></div>
+        </div>
+        <div class="panel">
+            <div class="panel-header"><div class="panel-title">Simulate Razorpay test card</div></div>
+            <div class="sim-form">
+                <label class="full">Test card (docs PAN)
+                    <select id="simCard"></select>
+                </label>
+                <label>CVV (any)
+                    <input id="simCvv" value="123" />
+                </label>
+                <label>Expiry
+                    <input id="simExpiry" value="12/29" />
+                </label>
+                <label>Amount (INR)
+                    <input id="simAmount" type="number" value="5400" />
+                </label>
+                <label>Mock ACS
+                    <select id="simBank">
+                        <option value="success">Success</option>
+                        <option value="failure" selected>Failure</option>
+                    </select>
+                </label>
+                <label class="full">Customer
+                    <input id="simName" value="Demo Customer" />
+                </label>
+                <button class="btn-talk-agent full" style="margin-top:4px;" onclick="runTestCheckout()">Run checkout → agent if failed</button>
+            </div>
+            <div id="simResult" style="font-size:11.5px;color:var(--text-muted);margin-top:10px;"></div>
+        </div>
+    </div>
+
+    <div class="studio-grid">
+        <!-- Event Stream Table -->
+        <div class="panel">
+            <div class="panel-header">
+                <div class="panel-title">📋 Payment Failure Stream & Triage Decisions</div>
+                <span class="tag tag-voice">Select case to connect</span>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Event ID</th>
+                            <th>Customer</th>
+                            <th>Sub Reason</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Connect</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eventsTableBody">
+                        <tr id="row_evt_192b57">
+                            <td>evt_192b57</td>
+                            <td><b>Aarav Gupta</b><br><span style="font-size:10px; color:var(--text-muted)">Bangalore</span></td>
+                            <td>cash_flow_delay</td>
+                            <td>₹46,873.30</td>
+                            <td><span class="tag tag-voice" id="tag_evt_192b57">VOICE_CALL</span></td>
+                            <td><button class="btn-table-action" onclick="openCallPopupModal('evt_192b57', 'Aarav Gupta', 46873.30, 'cash_flow_delay')">Talk to our Agent</button></td>
+                        </tr>
+                        <tr id="row_evt_1f66a7">
+                            <td>evt_1f66a7</td>
+                            <td><b>Ananya Desai</b><br><span style="font-size:10px; color:var(--text-muted)">Pune</span></td>
+                            <td>price_hesitation</td>
+                            <td>₹8,274.84</td>
+                            <td><span class="tag tag-voice" id="tag_evt_1f66a7">VOICE_CALL</span></td>
+                            <td><button class="btn-table-action" onclick="openCallPopupModal('evt_1f66a7', 'Ananya Desai', 8274.84, 'price_hesitation')">Talk to our Agent</button></td>
+                        </tr>
+                        <tr id="row_evt_7a4c05">
+                            <td>evt_7a4c05</td>
+                            <td><b>Priya Sharma</b><br><span style="font-size:10px; color:var(--text-muted)">Mumbai</span></td>
+                            <td>card_expired</td>
+                            <td>₹2,522.44</td>
+                            <td><span class="tag tag-voice" id="tag_evt_7a4c05">VOICE_CALL</span></td>
+                            <td><button class="btn-table-action" onclick="openCallPopupModal('evt_7a4c05', 'Priya Sharma', 2522.44, 'card_expired')">Talk to our Agent</button></td>
+                        </tr>
+                        <tr id="row_evt_24265d">
+                            <td>evt_24265d</td>
+                            <td><b>Rohan Nair</b><br><span style="font-size:10px; color:var(--text-muted)">Hyderabad</span></td>
+                            <td>insufficient_funds</td>
+                            <td>₹3,382.34</td>
+                            <td><span class="tag tag-voice" id="tag_evt_24265d">VOICE_CALL</span></td>
+                            <td><button class="btn-table-action" onclick="openCallPopupModal('evt_24265d', 'Rohan Nair', 3382.34, 'insufficient_funds')">Talk to our Agent</button></td>
+                        </tr>
+                        <tr id="row_evt_feaabe">
+                            <td>evt_feaabe</td>
+                            <td><b>Kavita Iyer</b><br><span style="font-size:10px; color:var(--text-muted)">Delhi</span></td>
+                            <td>bank_decline</td>
+                            <td>₹7,860.89</td>
+                            <td><span class="tag tag-voice" id="tag_evt_feaabe">VOICE_CALL</span></td>
+                            <td><button class="btn-table-action" onclick="openCallPopupModal('evt_feaabe', 'Kavita Iyer', 7860.89, 'bank_decline')">Talk to our Agent</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Case Overview & Recovery Triage Panel -->
+        <div class="panel">
+            <div class="panel-header">
+                <div class="panel-title">🎯 Case Overview & AI Recovery Action</div>
+                <span class="tag tag-voice" id="overviewTag">Ready to Connect</span>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:16px; height:100%; justify-content:space-between;">
+                <!-- Selected Customer Summary Card -->
+                <div class="caller-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); border-radius: 16px; padding: 18px; display:flex; align-items:center; gap:16px;">
+                    <div class="avatar-hero-circle" id="overviewAvatar" style="width:54px; height:54px; font-size:20px;">AS</div>
+                    <div>
+                        <h3 style="font-size:18px; font-weight:800; color:white;" id="overviewName">Aarav Shah</h3>
+                        <p style="font-size:12.5px; color:#60a5fa; font-weight:600; margin-top:2px;" id="overviewDetail">Pending: ₹2,523.30 • insufficient_funds</p>
+                        <p style="font-size:11px; color:var(--text-muted); margin-top:4px;">Ref Event ID: <span id="overviewEventId" style="color:white; font-weight:700;">evt_bc1b7</span></p>
+                    </div>
+                </div>
+
+                <!-- Triage Recommendation Card -->
+                <div style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 16px; padding: 16px;">
+                    <div style="font-size:11px; font-weight:800; color:#60a5fa; text-transform:uppercase; letter-spacing:0.5px;">🤖 LangGraph Recommended Triage</div>
+                    <div style="font-size:13.5px; font-weight:700; color:white; margin-top:6px;" id="triageActionText">Direct Voice Call Recovery + Dynamic Razorpay Link</div>
+                    <div style="font-size:11.5px; color:var(--text-muted); margin-top:4px;">AI Voice Agent will negotiate settlement terms and send a 1-click Razorpay payment link directly to customer's WhatsApp/SMS.</div>
+                </div>
+
+                <!-- Live Razorpay Link Banner -->
+                <div class="razorpay-link-banner" id="rzpLinkBanner">
+                    <div class="plink-info">
+                        <h4 id="plinkTitle">Razorpay Link: ₹2,523.30</h4>
+                        <p id="plinkSub">Ref: plink_bc1b7_1788509310</p>
+                    </div>
+                    <button class="btn-razorpay-pay" onclick="openRazorpayCheckoutModal()">⚡ Pay via Razorpay</button>
+                </div>
+
+                <!-- Launch Popup Call Window Button -->
+                <button class="btn-talk-agent" style="padding:16px; font-size:15px; border-radius:14px;" onclick="openCallPopupModal()">📞 Talk to our Agent</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUP CALL WINDOW MODAL OVERLAY -->
+    <div class="modal-overlay" id="callPopupModal">
+        <div class="call-modal-card">
+            <span class="modal-close" onclick="closeCallPopupModal()" title="Close Call Window">✕</span>
+            
+            <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border-color); padding-bottom:10px;">
+                <div style="font-size:14px; font-weight:800; color:white; display:flex; align-items:center; gap:6px;">
+                    <span>📞 Razorpay AI Web Call</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-size:12px; font-weight:800; color:#60a5fa;" id="callTimerDisplay">00:00</span>
+                    <span class="badge-live" id="callStatusBadge" style="color:#f59e0b;">● Ready</span>
+                </div>
+            </div>
+
+            <!-- Agent Persona Switcher Tabs -->
+            <div style="display:flex; background:#0b0f19; padding:4px; border-radius:12px; border:1px solid var(--border-color); gap:4px; margin-top:4px;">
+                <button id="tab_swara" class="btn-persona-tab active" onclick="switchPersonaTab('swara_hi')">👩 Swara (Hinglish)</button>
+                <button id="tab_ava" class="btn-persona-tab" onclick="switchPersonaTab('ava_us')">👩 Ava (Pure English)</button>
+            </div>
+
+            <!-- Hero Call Sphere -->
+            <div class="call-card-hero" style="margin-top:6px;">
+                <div class="avatar-hero-container">
+                    <div class="avatar-pulse-ring" id="avatarPulseRing"></div>
+                    <div class="avatar-hero-circle" id="avatarCircle">AS</div>
+                </div>
+                
+                <div class="call-card-details">
+                    <h3 id="callerName">Aarav Shah</h3>
+                    <p id="callerDetail">Pending: ₹2,523.30 • insufficient_funds</p>
+                    <div class="call-card-subtag" id="agentStateSubtag">🟢 Agent Swara Active</div>
+                </div>
+
+                <!-- Animated Audio Equalizer Sound Wave -->
+                <div class="sound-wave-box" id="soundWaveBox">
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                </div>
+            </div>
+
+            <!-- Call Captions & Transcript -->
+            <div class="chat-container" id="chatContainer" style="max-height:220px;">
+                <div class="chat-bubble bubble-agent">
+                    <div class="speaker-label label-agent" id="agentSpeakerLabel">Swara (Razorpay AI Agent)</div>
+                    Connecting call to customer...
+                </div>
+            </div>
+
+            <div id="micStatus" style="text-align:center;font-size:11.5px;font-weight:700;color:#f59e0b;margin-top:2px;">Mic idle — hold the button and speak</div>
+            <button id="micHoldBtn" type="button" class="btn-talk-agent" style="background:linear-gradient(135deg,#059669,#10b981);margin-top:6px;"
+                onpointerdown="beginHoldToSpeak(event)" onpointerup="endHoldToSpeak(event)" onpointercancel="endHoldToSpeak(event)">
+                Hold to speak
+            </button>
+
+            <!-- Red End Call Button -->
+            <button style="background: linear-gradient(135deg, #ef4444, #dc2626); color:white; border:none; padding:12px; border-radius:12px; font-size:14px; font-weight:800; cursor:pointer; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 14px rgba(239,68,68,0.4);" onclick="closeCallPopupModal()">
+                🔴 End Call & Close Window
+            </button>
+        </div>
+    </div>
+
+    <!-- Global Hidden Audio Player (must be at body level, not inside a hidden modal) -->
+    <audio id="audioPlayer" style="display:none;"></audio>
+
+    <!-- Razorpay Checkout Modal Simulator -->
+    <div class="modal-overlay" id="rzpModal">
+        <div class="razorpay-modal-card">
+            <span class="modal-close" onclick="closeRazorpayModal()">✕</span>
+            <div class="rzp-modal-header">
+                <div class="rzp-badge">R</div>
+                <div>
+                    <h3 style="font-size: 15px; font-weight:800; color:white;">Razorpay Gateway Checkout</h3>
+                    <p style="font-size:11.5px; color:#94a3b8;">Merchant: Razorpay Revenue Recovery Engine</p>
+                </div>
+            </div>
+
+            <div style="background:#0b0f19; padding:12px; border-radius:12px; border:1px solid var(--border-color);">
+                <div style="font-size:11px; color:#94a3b8; font-weight:700; text-transform:uppercase;">Customer & Payment</div>
+                <div style="font-size:18px; font-weight:800; color:#34d399; margin-top:2px;" id="rzpModalAmount">₹46,873.30</div>
+                <div style="font-size:12px; color:white; font-weight:600; margin-top:2px;" id="rzpModalCustomer">Aarav Gupta (Ref: evt_192b57)</div>
+            </div>
+
+            <div style="font-size:12px; font-weight:700; color:#94a3b8;">SELECT PAYMENT METHOD:</div>
+            
+            <div class="rzp-option selected">
+                <div><b>📱 UPI (Google Pay / PhonePe / Paytm)</b><br><span style="font-size:11px; color:#94a3b8">Instant 1-Click Approval</span></div>
+                <span style="color:#10b981; font-weight:800;">✓</span>
+            </div>
+            <div class="rzp-option">
+                <div><b>💳 Credit / Debit Card</b><br><span style="font-size:11px; color:#94a3b8">Visa, Mastercard, RuPay</span></div>
+            </div>
+
+            <button class="btn-rzp-complete" onclick="triggerRazorpayPaymentWebhook()">🎉 Complete Payment via Razorpay</button>
+        </div>
+    </div>
+
+    <!-- Audit Trail Modal -->
+    <div class="modal-overlay" id="auditModal">
+        <div class="razorpay-modal-card" style="width: 650px; max-height: 80vh; overflow-y: auto;">
+            <span class="modal-close" onclick="closeAuditModal()">✕</span>
+            <h3 style="font-size:16px; font-weight:800; color:white; margin-bottom:12px;">📜 Compliant Recovery Audit Trail</h3>
+            <div id="auditLogContent" style="font-family:'JetBrains Mono', monospace; font-size:11px; color:#cbd5e1; white-space:pre-wrap; background:#0b0f19; padding:14px; border-radius:12px; max-height:400px; overflow-y:auto;">
+                Loading audit logs...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentEventId = "evt_192b57";
+        let currentName = "Aarav Gupta";
+        let currentAmount = 2523.30;
+        let currentReason = "insufficient_funds";
+        let currentVoiceAgent = "swara_hi";
+        let callEpoch = 0;
+        let lastHeardUtterance = "";
+        let holdSpeechBuffer = "";
+        let sendInFlight = false;
+        let lastSendAt = 0;
+        
+        let totalFailedVolume = 0;
+        let totalFailedCount = 0;
+        let recoveredVolume = 0;
+        let recoveredCount = 0;
+
+        function inr(n) {
+            return "₹" + Math.round(Number(n) || 0).toLocaleString("en-IN");
+        }
+
+        function applyMetrics(m) {
+            totalFailedVolume = m.failed_volume_inr || 0;
+            totalFailedCount = m.failed_payments_count || 0;
+            recoveredVolume = m.recovered_volume_inr || 0;
+            recoveredCount = m.recovered_count || 0;
+
+            document.getElementById("kpiFailedVolume").innerText = inr(m.live_failed_volume_inr != null ? m.live_failed_volume_inr : m.failed_volume_inr);
+            document.getElementById("kpiFailedCount").innerText = (m.live_failed_count != null ? m.live_failed_count : m.failed_payments_count) + " live fails · portfolio " + (m.failed_payments_count || 0);
+            document.getElementById("kpiOpenVolume").innerText = inr(m.open_volume_inr);
+            document.getElementById("kpiOpenCount").innerText = (m.open_count || 0) + " unpaid in backlog";
+            document.getElementById("kpiRecovered").innerText = inr(m.live_recovered_volume_inr != null ? m.live_recovered_volume_inr : m.recovered_volume_inr);
+            document.getElementById("kpiRecoveredCount").innerText = (m.live_recovered_count || m.recovered_count || 0) + " recovered live";
+            document.getElementById("kpiRetrievalRate").innerText = (m.live_retrieval_rate_count_pct != null ? m.live_retrieval_rate_count_pct : m.retrieval_rate_count_pct) + "%";
+            document.getElementById("kpiRetrievalVolume").innerText = (m.live_retrieval_rate_volume_pct || 0) + "% by volume (live) · " + (m.retrieval_rate_volume_pct || 0) + "% portfolio";
+            document.getElementById("kpiAuthRate").innerText = (m.authorization_rate_pct || 0) + "%";
+            document.getElementById("kpiCheckoutMix").innerText = (m.checkout_success || 0) + " captured / " + (m.checkout_failed || 0) + " failed";
+            document.getElementById("kpiNetValue").innerText = inr(m.net_value_added_inr);
+            document.getElementById("kpiRoi").innerText = (m.roi_multiplier || 0) + "x ROI after AI cost";
+
+            const reasons = m.by_reason || [];
+            const maxC = Math.max(1, ...reasons.map(r => r.count));
+            document.getElementById("reasonBars").innerHTML = reasons.length ? reasons.map(r => `
+                <div class="bar-row">
+                    <div class="bar-label" title="${r.reason}">${r.reason}</div>
+                    <div class="bar-track"><div class="bar-fill" style="width:${(r.count / maxC) * 100}%"></div></div>
+                    <div style="width:88px;text-align:right;font-weight:700;">${r.count} · ${r.retrieval_rate_pct}%</div>
+                </div>`).join("") : "No failure events yet.";
+
+            const f = m.funnel || {};
+            document.getElementById("funnelSteps").innerHTML = [
+                ["Checkout attempts", f.checkout_attempts],
+                ["Failed at gateway", f.failed],
+                ["Agent / nudge launched", f.agent_launched],
+                ["Recovered", f.recovered]
+            ].map(([label, val]) => `<div class="funnel-step"><span>${label}</span><b>${val || 0}</b></div>`).join("");
+            document.getElementById("avgTicket").innerText = inr(m.avg_failed_ticket_inr);
+            document.getElementById("intCost").innerText = inr(m.intervention_cost_inr);
+        }
+
+        async function refreshMetrics() {
+            try {
+                const res = await fetch("/api/metrics");
+                applyMetrics(await res.json());
+            } catch (e) {
+                console.log("metrics error", e);
+            }
+        }
+
+        async function loadTestCards() {
+            try {
+                const res = await fetch("/api/payments/test-cards");
+                const data = await res.json();
+                const sel = document.getElementById("simCard");
+                sel.innerHTML = (data.cards || []).map(c =>
+                    `<option value="${c.display}">${c.network} ${c.region} — ${c.label}</option>`
+                ).join("");
+            } catch (e) {
+                document.getElementById("simCard").innerHTML = '<option value="4100 2800 0000 1007">Visa IN happy path</option>';
+            }
+        }
+
+        async function runTestCheckout() {
+            const out = document.getElementById("simResult");
+            out.innerText = "Running checkout…";
+            try {
+                const res = await fetch("/api/payments/simulate", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        card_number: document.getElementById("simCard").value,
+                        cvv: document.getElementById("simCvv").value,
+                        expiry: document.getElementById("simExpiry").value,
+                        amount_inr: parseFloat(document.getElementById("simAmount").value || "0"),
+                        customer_name: document.getElementById("simName").value,
+                        bank_action: document.getElementById("simBank").value,
+                        contact_channel_pref: "voice"
+                    })
+                });
+                const data = await res.json();
+                const c = data.checkout || {};
+                const rec = data.recovery;
+                if (c.authorized) {
+                    out.innerText = "Captured in test mode. No agent.";
+                } else {
+                    const action = rec && rec.triage ? rec.triage.action : "n/a";
+                    out.innerText = `Failed (${c.sub_reason}). Agent action: ${action}. Recovered: ${rec && rec.recovered}`;
+                }
+                await loadEventsTable();
+                await refreshMetrics();
+            } catch (e) {
+                out.innerText = "Simulation failed: " + e;
+            }
+        }
+
+        function updateDashboardKPIs() {
+            refreshMetrics();
+        }
+
+        let socket = null;
+        let speechRecognizer = null;
+        let isDuplexActive = false;
+
+        async function loadEventsTable() {
+            try {
+                const res = await fetch('/api/events');
+                const data = await res.json();
+                const events = data.events || [];
+                if (events.length === 0) return;
+                
+                totalFailedCount = events.length;
+                totalFailedVolume = events.reduce((sum, evt) => sum + parseFloat(evt.amount_inr || 5000), 0);
+                recoveredCount = events.filter(evt => evt.status === "RECOVERED").length;
+                recoveredVolume = events.filter(evt => evt.status === "RECOVERED").reduce((sum, evt) => sum + parseFloat(evt.amount_inr || 5000), 0);
+                
+                updateDashboardKPIs();
+
+                const tbody = document.getElementById("eventsTableBody");
+                if (!tbody) return;
+
+                let html = "";
+                const newestFirst = [...events].reverse();
+                const slice = newestFirst.slice(0, 20);
+                slice.forEach(evt => {
+                    const eId = evt.event_id;
+                    const cName = evt.customer_name || 'Customer';
+                    const cCity = evt.city || 'India';
+                    const sReason = evt.sub_reason || evt.failure_type || 'payment_failed';
+                    const amt = parseFloat(evt.amount_inr || 5000.0);
+                    const formattedAmt = '₹' + amt.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+                    const status = (evt.status || "OPEN").toString();
+                    const recovered = status.toUpperCase() === "RECOVERED";
+                    const tagLabel = recovered ? "RECOVERED" : status;
+                    const safeName = cName.replace(/'/g, "\\'");
+
+                    html += `
+                        <tr id="row_${eId}">
+                            <td>${eId}</td>
+                            <td><b>${cName}</b><br><span style="font-size:10px; color:var(--text-muted)">${cCity}</span></td>
+                            <td>${sReason}</td>
+                            <td>${formattedAmt}</td>
+                            <td><span class="tag ${recovered ? "tag-recovered" : "tag-voice"}" id="tag_${eId}">${tagLabel}</span></td>
+                            <td><button class="btn-table-action" onclick="openCallPopupModal('${eId}', '${safeName}', ${amt}, '${sReason}')">Talk to our Agent</button></td>
+                        </tr>
+                    `;
+                });
+                tbody.innerHTML = html;
+
+                if (!window._didSelectInitialEvent) {
+                    const first = slice[0];
+                    if (first) {
+                        selectEvent(first.event_id, first.customer_name, parseFloat(first.amount_inr), first.sub_reason);
+                    }
+                    window._didSelectInitialEvent = true;
+                }
+            } catch (err) {
+                console.log("Error loading events table:", err);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadTestCards();
+            loadEventsTable();
+            refreshMetrics();
+            setInterval(() => { refreshMetrics(); loadEventsTable(); }, 8000);
+        });
+
+        let callTimerInterval = null;
+        let callSeconds = 0;
+
+        function startCallTimer() {
+            stopCallTimer();
+            callSeconds = 0;
+            updateTimerDisplay();
+            callTimerInterval = setInterval(() => {
+                callSeconds++;
+                updateTimerDisplay();
+            }, 1000);
+        }
+
+        function stopCallTimer() {
+            if (callTimerInterval) {
+                clearInterval(callTimerInterval);
+                callTimerInterval = null;
+            }
+        }
+
+        function updateTimerDisplay() {
+            const mins = String(Math.floor(callSeconds / 60)).padStart(2, '0');
+            const secs = String(callSeconds % 60).padStart(2, '0');
+            const el = document.getElementById("callTimerDisplay");
+            if (el) el.innerText = `${mins}:${secs}`;
+        }
+
+        function getInitials(name) {
+            if (!name) return "CU";
+            const parts = name.trim().split(" ");
+            if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+            return name.substring(0, 2).toUpperCase();
+        }
+
+        function selectEvent(eventId, name, amount, reason) {
+            stopAudio();
+            if (isDuplexActive) { stopDuplexCall(); }
+
+            currentEventId = eventId;
+            currentName = name;
+            currentAmount = amount;
+            currentReason = reason;
+
+            const initials = getInitials(name);
+
+            // Update Popup Modal labels
+            document.getElementById("callerName").innerText = name;
+            document.getElementById("callerDetail").innerText = "Pending: ₹" + amount.toLocaleString('en-IN') + " • " + reason;
+            document.getElementById("avatarCircle").innerText = initials;
+
+            // Update Overview Panel labels
+            const ovName = document.getElementById("overviewName");
+            if (ovName) ovName.innerText = name;
+            const ovDetail = document.getElementById("overviewDetail");
+            if (ovDetail) ovDetail.innerText = "Pending: ₹" + amount.toLocaleString('en-IN', { minimumFractionDigits: 2 }) + " • " + reason;
+            const ovId = document.getElementById("overviewEventId");
+            if (ovId) ovId.innerText = eventId;
+            const ovAvatar = document.getElementById("overviewAvatar");
+            if (ovAvatar) ovAvatar.innerText = initials;
+
+            // Reset payment link banner
+            document.getElementById("plinkTitle").innerText = "Generating Razorpay Link...";
+            document.getElementById("plinkSub").innerText = "Please wait";
+        }
+
+        function openCallPopupModal(eventId, name, amount, reason) {
+            if (eventId) {
+                selectEvent(eventId, name, amount, reason);
+            }
+            const modal = document.getElementById("callPopupModal");
+            if (modal) modal.style.display = "flex";
+
+            resetCallTranscript("Connecting call — generating a fresh script...");
+            startStandardCall().then(() => {
+                armMicrophone();
+            });
+        }
+
+        function closeCallPopupModal() {
+            stopAudio();
+            stopMicCapture();
+            if (isDuplexActive) { stopDuplexCall(); }
+            stopCallTimer();
+
+            const modal = document.getElementById("callPopupModal");
+            if (modal) modal.style.display = "none";
+        }
+
+        function resetCallTranscript(placeholder) {
+            callEpoch += 1;
+            lastHeardUtterance = "";
+            holdSpeechBuffer = "";
+            sendInFlight = false;
+            const chatContainer = document.getElementById("chatContainer");
+            if (chatContainer) {
+                chatContainer.innerHTML = `
+                    <div class="chat-bubble bubble-agent">
+                        <div class="speaker-label label-agent" id="agentSpeakerLabel">${currentVoiceAgent === "ava_us" ? "Ava" : "Swara"} (Razorpay AI Agent)</div>
+                        ${placeholder || "Starting a fresh call..."}
+                    </div>
+                `;
+            }
+            stopCallTimer();
+            const timer = document.getElementById("callTimerDisplay");
+            if (timer) timer.innerText = "00:00";
+        }
+
+        function switchPersonaTab(agentId) {
+            stopAudio();
+            if (isDuplexActive) { stopDuplexCall(); }
+
+            // Fully stop old speech recognizer before switching
+            if (speechRecognizer) {
+                try { speechRecognizer.onend = null; speechRecognizer.onresult = null; speechRecognizer.stop(); } catch (e) {}
+                speechRecognizer = null;
+            }
+            stopMicCapture();
+
+            currentVoiceAgent = agentId;
+            const tabSwara = document.getElementById("tab_swara");
+            const tabAva = document.getElementById("tab_ava");
+            const agentSubtag = document.getElementById("agentStateSubtag");
+            const agentName = agentId === "swara_hi" ? "Swara" : "Ava";
+
+            if (agentId === "swara_hi") {
+                if (tabSwara) tabSwara.className = "btn-persona-tab active";
+                if (tabAva) tabAva.className = "btn-persona-tab";
+                if (agentSubtag) agentSubtag.innerText = "🟢 Agent Swara Active";
+            } else {
+                if (tabSwara) tabSwara.className = "btn-persona-tab";
+                if (tabAva) tabAva.className = "btn-persona-tab active";
+                if (agentSubtag) agentSubtag.innerText = "🟢 Agent Ava Active";
+            }
+
+            // Generate a fresh transcript for the new agent
+            resetCallTranscript("Switching to " + agentName + " — generating a fresh " + agentName + " transcript...");
+            document.getElementById("callStatusBadge").innerText = "● Restarting (" + agentName + ")";
+            document.getElementById("callStatusBadge").style.color = "#f59e0b";
+
+            // Start the new call first, then arm mic after it's ready
+            startStandardCall().then(() => {
+                armMicrophone();
+            });
+        }
+
+        function changeVoiceAgent() {
+            switchPersonaTab(document.getElementById("voiceAgentSelect") ? document.getElementById("voiceAgentSelect").value : currentVoiceAgent);
+        }
+
+        async function startStandardCall() {
+            const frozenEventId = currentEventId;
+            const frozenVoiceAgent = currentVoiceAgent;
+            const frozenName = currentName;
+            const frozenAmount = currentAmount;
+            const frozenReason = currentReason;
+            const frozenEpoch = callEpoch;
+            const agentLabel = frozenVoiceAgent === "ava_us" ? "Ava" : "Swara";
+
+            document.getElementById("callStatusBadge").innerText = "● Calling " + agentLabel + "...";
+            document.getElementById("callStatusBadge").style.color = "#f59e0b";
+
+            const chatContainer = document.getElementById("chatContainer");
+            if (chatContainer) {
+                chatContainer.innerHTML = `
+                    <div class="chat-bubble bubble-agent">
+                        <div class="speaker-label label-agent">${agentLabel} (Razorpay AI Agent)</div>
+                        Connecting — generating a fresh ${agentLabel} script...
+                    </div>
+                `;
+            }
+
+            try {
+                const response = await fetch('/api/voice/call', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        event_id: frozenEventId,
+                        voice_agent_id: frozenVoiceAgent,
+                        customer_name: frozenName,
+                        amount_inr: frozenAmount,
+                        sub_reason: frozenReason,
+                        language_pref: frozenVoiceAgent === "ava_us" ? "english" : "hinglish",
+                        reset_session: true
+                    })
+                });
+                
+                const data = await response.json();
+
+                if (frozenEpoch !== callEpoch || frozenEventId !== currentEventId || frozenVoiceAgent !== currentVoiceAgent) {
+                    console.log("[stale guard] Discarded opening for", frozenVoiceAgent, frozenEventId);
+                    return;
+                }
+
+                document.getElementById("callStatusBadge").innerText = "● Connected (" + (data.agent_name || agentLabel) + ")";
+                document.getElementById("callStatusBadge").style.color = "#34d399";
+                startCallTimer();
+
+                chatContainer.innerHTML = `
+                    <div class="chat-bubble bubble-agent">
+                        <div class="speaker-label label-agent">${data.agent_name || agentLabel} (Razorpay AI Agent)</div>
+                        ${data.agent_opening_text}
+                    </div>
+                `;
+
+                if (data.audio_base64) {
+                    playAudioBase64(data.audio_base64, data.agent_opening_text);
+                }
+
+                generateRazorpayLink(frozenEventId);
+
+            } catch (err) {
+                console.log("Error starting call:", err);
+                if (frozenEpoch === callEpoch) {
+                    document.getElementById("callStatusBadge").innerText = "● Disconnected";
+                    document.getElementById("callStatusBadge").style.color = "#ef4444";
+                }
+            }
+        }
+
+        async function generateRazorpayLink(forEventId) {
+            const eventId = forEventId || currentEventId;
+            try {
+                const res = await fetch('/api/razorpay/create_link', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ event_id: eventId })
+                });
+                const linkData = await res.json();
+                // Only update if still on the same case
+                if (eventId === currentEventId) {
+                    document.getElementById("plinkTitle").innerText = `Razorpay Link: ₹${currentAmount.toLocaleString('en-IN')}`;
+                    document.getElementById("plinkSub").innerText = `Ref: ${linkData.plink_id}`;
+                }
+            } catch (e) {
+                console.log("Error creating link:", e);
+            }
+        }
+
+        function openRazorpayCheckoutModal() {
+            document.getElementById("rzpModalAmount").innerText = "₹" + currentAmount.toLocaleString('en-IN');
+            document.getElementById("rzpModalCustomer").innerText = currentName + " (Ref: " + currentEventId + ")";
+            document.getElementById("rzpModal").style.display = "flex";
+        }
+
+        function closeRazorpayModal() {
+            document.getElementById("rzpModal").style.display = "none";
+        }
+
+        async function triggerRazorpayPaymentWebhook() {
+            closeRazorpayModal();
+            try {
+                const res = await fetch('/api/razorpay/webhook', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ event_id: currentEventId, payment_method: "upi" })
+                });
+                const data = await res.json();
+
+                const tagEl = document.getElementById("tag_" + currentEventId);
+                // Update Live KPI Numbers
+                if (tagEl && tagEl.innerText !== "RECOVERED") {
+                    recoveredVolume += currentAmount;
+                    recoveredCount += 1;
+                    updateDashboardKPIs();
+                    
+                    tagEl.className = "tag tag-recovered";
+                    tagEl.innerText = "RECOVERED";
+                }
+
+                const chatContainer = document.getElementById("chatContainer");
+                chatContainer.innerHTML += `
+                    <div class="chat-bubble bubble-agent" style="background:#065f46; border-color:#059669;">
+                        <div class="speaker-label label-agent" style="color:#6ee7b7;">🎉 Razorpay Gateway Success</div>
+                        Payment of ₹${currentAmount.toLocaleString('en-IN')} successfully captured! Webhook verified and logged to Audit Trail.
+                    </div>
+                `;
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            } catch (e) {
+                console.log("Error triggering webhook:", e);
+            }
+        }
+
+        async function showAuditLogs() {
+            document.getElementById("auditModal").style.display = "flex";
+            try {
+                const res = await fetch('/api/audit/logs');
+                const data = await res.json();
+                document.getElementById("auditLogContent").innerText = JSON.stringify(data.logs, null, 2);
+            } catch (e) {
+                document.getElementById("auditLogContent").innerText = "Failed to load audit logs.";
+            }
+        }
+
+        function closeAuditModal() {
+            document.getElementById("auditModal").style.display = "none";
+        }
+
+        let micStream = null;
+        let micRecorder = null;
+        let micChunks = [];
+        let holdingMic = false;
+        let agentAudioPlaying = false;
+
+        function setMicStatus(text, color) {
+            const el = document.getElementById("micStatus");
+            if (!el) return;
+            el.innerText = text;
+            if (color) el.style.color = color;
+        }
+
+        async function armMicrophone() {
+            try {
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    setMicStatus("This browser cannot access the microphone.", "#ef4444");
+                    return;
+                }
+                if (!micStream) {
+                    micStream = await navigator.mediaDevices.getUserMedia({
+                        audio: {
+                            echoCancellation: true,
+                            noiseSuppression: true,
+                            autoGainControl: true,
+                            channelCount: 1
+                        }
+                    });
+                }
+                setMicStatus("Mic ready — hold Speak and talk", "#34d399");
+                startSpeechRecognition();
+            } catch (err) {
+                console.log("Mic permission error:", err);
+                setMicStatus("Allow microphone access, then hold Speak.", "#ef4444");
+            }
+        }
+
+        function stopMicCapture() {
+            holdingMic = false;
+            try { if (micRecorder && micRecorder.state !== "inactive") micRecorder.stop(); } catch (e) {}
+            micRecorder = null;
+            if (micStream) {
+                micStream.getTracks().forEach(t => t.stop());
+                micStream = null;
+            }
+            if (speechRecognizer) {
+                try { speechRecognizer.onend = null; speechRecognizer.stop(); } catch (e) {}
+                speechRecognizer = null;
+            }
+            setMicStatus("Mic idle — hold the button and speak", "#f59e0b");
+        }
+
+        async function beginHoldToSpeak(ev) {
+            if (ev) {
+                ev.preventDefault();
+                if (ev.currentTarget && ev.currentTarget.setPointerCapture) {
+                    try { ev.currentTarget.setPointerCapture(ev.pointerId); } catch (e) {}
+                }
+            }
+            if (agentAudioPlaying) stopAudio();
+            if (holdingMic) return;
+            holdingMic = true;
+            holdSpeechBuffer = "";
+            const btn = document.getElementById("micHoldBtn");
+            if (btn) { btn.innerText = "Listening… release to send"; btn.style.background = "linear-gradient(135deg,#dc2626,#ef4444)"; }
+            setMicStatus("Listening — speak now", "#34d399");
+            await startMicRecording();
+        }
+
+        async function endHoldToSpeak(ev) {
+            if (!holdingMic) return;
+            holdingMic = false;
+            const btn = document.getElementById("micHoldBtn");
+            if (btn) { btn.innerText = "Hold to speak"; btn.style.background = "linear-gradient(135deg,#059669,#10b981)"; }
+            await stopMicRecordingAndSend();
+        }
+
+        async function startMicRecording() {
+            if (!micStream) {
+                await armMicrophone();
+            }
+            if (!micStream) return;
+            micChunks = [];
+            const mime = MediaRecorder.isTypeSupported("audio/webm;codecs=opus") ? "audio/webm;codecs=opus"
+                : (MediaRecorder.isTypeSupported("audio/webm") ? "audio/webm" : "");
+            try {
+                micRecorder = mime ? new MediaRecorder(micStream, { mimeType: mime }) : new MediaRecorder(micStream);
+            } catch (e) {
+                setMicStatus("Recorder unavailable — browser live dictation will be used.", "#f59e0b");
+                return;
+            }
+            micRecorder.ondataavailable = (e) => { if (e.data && e.data.size > 0) micChunks.push(e.data); };
+            try { micRecorder.start(200); } catch (e) { micRecorder.start(); }
+        }
+
+        async function stopMicRecordingAndSend() {
+            const rec = micRecorder;
+            micRecorder = null;
+            let blob = null;
+            if (rec && rec.state !== "inactive") {
+                blob = await new Promise((resolve) => {
+                    rec.onstop = () => resolve(new Blob(micChunks, { type: rec.mimeType || "audio/webm" }));
+                    try { rec.stop(); } catch (e) { resolve(new Blob(micChunks, { type: "audio/webm" })); }
+                });
+            }
+
+            const liveFallback = (holdSpeechBuffer || "").trim();
+            let text = "";
+
+            if (blob && blob.size >= 100) {
+                setMicStatus("Transcribing…", "#60a5fa");
+                const form = new FormData();
+                const ext = (blob.type || "").includes("ogg") ? "ogg" : "webm";
+                form.append("audio", blob, "user_speech." + ext);
+                try {
+                    const res = await fetch("/api/voice/transcribe", { method: "POST", body: form });
+                    const data = await res.json();
+                    text = (data.text || "").trim();
+                } catch (e) {
+                    console.log("transcribe failed", e);
+                }
+            }
+
+            if (!text) text = liveFallback;
+            if (!text) {
+                setMicStatus("Didn't catch speech — hold, wait a beat, then speak closer to the mic", "#f59e0b");
+                return;
+            }
+            lastHeardUtterance = text;
+            holdSpeechBuffer = "";
+            setMicStatus("Heard: “" + text + "”", "#34d399");
+            await sendUserMessage(text);
+        }
+
+        function handleMainTalkButtonClick() {
+            if (isDuplexActive) {
+                stopDuplexCall();
+            } else {
+                startDuplexCall();
+            }
+        }
+
+        function startDuplexCall() {
+            const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+            const wsUrl = protocol + "//" + window.location.host + "/ws/call/" + currentEventId;
+
+            socket = new WebSocket(wsUrl);
+
+            socket.onopen = () => {
+                isDuplexActive = true;
+                const btn = document.getElementById("mainTalkBtn");
+                if (btn) {
+                    btn.innerText = "End Agent Call";
+                    btn.classList.add("active");
+                }
+
+                document.getElementById("callStatusBadge").innerText = "● LIVE MIC ACTIVE";
+                document.getElementById("callStatusBadge").style.color = "#ef4444";
+
+                socket.send(JSON.stringify({
+                    action: "START_CALL",
+                    voice_agent_id: currentVoiceAgent
+                }));
+
+                armMicrophone();
+            };
+
+            socket.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                const chatContainer = document.getElementById("chatContainer");
+
+                if (data.type === "AGENT_OPENING" || data.type === "AGENT_RESPONSE") {
+                    chatContainer.innerHTML += `
+                        <div class="chat-bubble bubble-agent">
+                            <div class="speaker-label label-agent">${data.agent_name || 'Agent'} (Razorpay AI Agent)</div>
+                            ${data.text}
+                        </div>
+                    `;
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+
+                    if (data.audio_base64) {
+                        playAudioBase64(data.audio_base64, data.text);
+                    }
+                } else if (data.type === "USER_TRANSCRIPT") {
+                    chatContainer.innerHTML += `
+                        <div class="chat-bubble bubble-customer">
+                            <div class="speaker-label label-customer">Customer (${currentName})</div>
+                            ${data.text}
+                        </div>
+                    `;
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                } else if (data.type === "INTERRUPT_AGENT") {
+                    stopAudio();
+                }
+            };
+
+            socket.onclose = () => {
+                isDuplexActive = false;
+                socket = null;
+            };
+        }
+
+        function stopDuplexCall() {
+            isDuplexActive = false;
+            const btn = document.getElementById("mainTalkBtn");
+            if (btn) {
+                btn.innerText = "Talk to our Agent";
+                btn.classList.remove("active");
+            }
+
+            document.getElementById("callStatusBadge").innerText = "● Connected";
+            document.getElementById("callStatusBadge").style.color = "#34d399";
+
+            if (socket) {
+                try { socket.close(); } catch (e) {}
+                socket = null;
+            }
+        }
+
+        function startSpeechRecognition() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                return;
+            }
+            if (speechRecognizer) {
+                try { speechRecognizer.onend = null; speechRecognizer.onresult = null; speechRecognizer.stop(); } catch (e) {}
+            }
+
+            const recognizer = new SpeechRecognition();
+            speechRecognizer = recognizer;
+            recognizer.continuous = true;
+            recognizer.interimResults = true;
+            recognizer.lang = currentVoiceAgent === "ava_us" ? "en-US" : "hi-IN";
+            recognizer.maxAlternatives = 3;
+
+            recognizer.onresult = (event) => {
+                let finalText = "";
+                let interimText = "";
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    const piece = event.results[i][0].transcript || "";
+                    if (event.results[i].isFinal) finalText += piece;
+                    else interimText += piece;
+                }
+                finalText = finalText.trim();
+                if (holdingMic) {
+                    if (finalText) holdSpeechBuffer = (holdSpeechBuffer + " " + finalText).trim();
+                    else if (interimText) setMicStatus("Listening: “" + interimText.trim() + "”", "#34d399");
+                    return;
+                }
+                if (!finalText) return;
+                if (agentAudioPlaying) return;
+                if (finalText === lastHeardUtterance) return;
+                lastHeardUtterance = finalText;
+                stopAudio();
+                setMicStatus("Heard: “" + finalText + "”", "#34d399");
+                sendUserMessage(finalText);
+            };
+
+            recognizer.onerror = (event) => {
+                if (event.error === "not-allowed") {
+                    setMicStatus("Microphone blocked in browser settings", "#ef4444");
+                } else if (event.error !== "aborted") {
+                    // For no-speech, network, audio-capture: try to restart
+                    setTimeout(() => {
+                        const modal = document.getElementById("callPopupModal");
+                        if (modal && modal.style.display === "flex" && speechRecognizer === recognizer) {
+                            try { recognizer.start(); } catch (e) {}
+                        }
+                    }, 300);
+                }
+            };
+
+            // Use a frozen local reference so the callback knows if it's still the active recognizer
+            recognizer.onend = () => {
+                const modal = document.getElementById("callPopupModal");
+                if (modal && modal.style.display === "flex" && speechRecognizer === recognizer) {
+                    try { recognizer.start(); } catch (e) {}
+                }
+            };
+
+            try { recognizer.start(); } catch (e) {}
+        }
+
+        async function sendUserMessage(text) {
+            if (!text || !text.trim()) return;
+            if (sendInFlight) return;
+            sendInFlight = true;
+            lastSendAt = Date.now();
+            lastHeardUtterance = text.trim();
+
+            const frozenEpoch = callEpoch;
+            const frozenAgent = currentVoiceAgent;
+            const frozenEventId = currentEventId;
+
+            if (isDuplexActive && socket && socket.readyState === WebSocket.OPEN) {
+                stopAudio();
+                socket.send(JSON.stringify({
+                    type: "USER_UTTERANCE",
+                    text: text.trim()
+                }));
+                sendInFlight = false;
+                return;
+            }
+
+            const chatContainer = document.getElementById("chatContainer");
+            chatContainer.innerHTML += `
+                <div class="chat-bubble bubble-customer">
+                    <div class="speaker-label label-customer">Customer (${currentName})</div>
+                    ${text.trim()}
+                </div>
+            `;
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            try {
+                const response = await fetch('/api/voice/respond', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ event_id: frozenEventId, customer_utterance: text.trim(), voice_agent_id: frozenAgent })
+                });
+
+                const data = await response.json();
+                if (frozenEpoch !== callEpoch || frozenAgent !== currentVoiceAgent || frozenEventId !== currentEventId) {
+                    return;
+                }
+
+                chatContainer.innerHTML += `
+                    <div class="chat-bubble bubble-agent">
+                        <div class="speaker-label label-agent">${data.agent_name || 'Agent'} (Razorpay AI Agent)</div>
+                        ${data.agent_reply_text}
+                    </div>
+                `;
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+
+                if (data.audio_base64) {
+                    playAudioBase64(data.audio_base64, data.agent_reply_text);
+                }
+            } catch (err) {
+                console.log("Error sending message:", err);
+            } finally {
+                sendInFlight = false;
+            }
+        }
+
+        let activeAudioSessionId = 0;
+
+        function markAgentAudioIdle() {
+            agentAudioPlaying = false;
+            const waveBox = document.getElementById("soundWaveBox");
+            if (waveBox) waveBox.style.opacity = "0.3";
+        }
+
+        function stopAudio() {
+            activeAudioSessionId++;
+            markAgentAudioIdle();
+            const player = document.getElementById("audioPlayer");
+            if (player) {
+                player.onended = null;
+                player.onerror = null;
+                player.pause();
+                player.currentTime = 0;
+                player.removeAttribute("src");
+                try { player.load(); } catch (e) {}
+            }
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        function playAudioBase64(b64Data, fallbackText) {
+            stopAudio();
+            const currentSession = activeAudioSessionId;
+            const player = document.getElementById("audioPlayer");
+            
+            if (!b64Data) {
+                speakWebSpeech(fallbackText, currentSession);
+                return;
+            }
+
+            const waveBox = document.getElementById("soundWaveBox");
+            if (waveBox) waveBox.style.opacity = "1";
+
+            player.src = "data:audio/mp3;base64," + b64Data;
+            agentAudioPlaying = true;
+            player.onended = () => {
+                if (currentSession === activeAudioSessionId) markAgentAudioIdle();
+            };
+            player.onerror = () => {
+                if (currentSession === activeAudioSessionId) markAgentAudioIdle();
+            };
+            const playPromise = player.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    if (currentSession !== activeAudioSessionId) {
+                        player.pause();
+                        markAgentAudioIdle();
+                    }
+                }).catch(e => {
+                    console.log("Audio autoplay prevented or interrupted:", e);
+                    if (currentSession === activeAudioSessionId) markAgentAudioIdle();
+                });
+            }
+        }
+
+        function speakWebSpeech(text, sessionId) {
+            if (!text || !('speechSynthesis' in window)) {
+                markAgentAudioIdle();
+                return;
+            }
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            const voices = window.speechSynthesis.getVoices();
+            const wantHi = currentVoiceAgent !== "ava_us";
+            const match = voices.find(v => wantHi ? (v.lang.includes("hi") || v.lang.includes("IN")) : v.lang.startsWith("en"));
+            if (match) utterance.voice = match;
+            agentAudioPlaying = true;
+            utterance.onend = () => {
+                if (sessionId == null || sessionId === activeAudioSessionId) markAgentAudioIdle();
+            };
+            utterance.onerror = () => {
+                if (sessionId == null || sessionId === activeAudioSessionId) markAgentAudioIdle();
+            };
+            window.speechSynthesis.speak(utterance);
+        }
+    </script>
+</body>
+</html>

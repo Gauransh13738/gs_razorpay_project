@@ -1,0 +1,585 @@
+[
+  {
+    "timestamp": "2026-09-04T06:50:56.088721Z",
+    "event_id": "evt_192b57",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_192b57_1788504656",
+      "event_id": "evt_192b57",
+      "customer_name": "Valued Customer",
+      "amount_inr": 4999.0,
+      "short_url": "https://rzp.io/i/rec_192b57",
+      "status": "created",
+      "created_at": 1788504656.088721,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-04T06:50:58.140837Z",
+    "event_id": "evt_192b57",
+    "stage": "RECOVERY_FULFILLMENT",
+    "action": "RAZORPAY_PAYMENT_CAPTURED",
+    "details": {
+      "event_id": "evt_192b57",
+      "razorpay_payment_id": "pay_192b57_1788504658",
+      "razorpay_plink_id": "plink_192b57_1788504656",
+      "amount_recovered": 4999.0,
+      "payment_method": "upi",
+      "status": "RECOVERED",
+      "timestamp": "2026-09-04T06:50:58.140837Z"
+    }
+  },
+  {
+    "timestamp": "2026-09-04T06:51:43.359246Z",
+    "event_id": "evt_192b57",
+    "stage": "RECOVERY_FULFILLMENT",
+    "action": "RAZORPAY_PAYMENT_CAPTURED",
+    "details": {
+      "event_id": "evt_192b57",
+      "razorpay_payment_id": "pay_192b57_1788504703",
+      "razorpay_plink_id": "plink_192b57_1788504656",
+      "amount_recovered": 4999.0,
+      "payment_method": "upi",
+      "status": "RECOVERED",
+      "timestamp": "2026-09-04T06:51:43.359246Z"
+    }
+  },
+  {
+    "timestamp": "2026-09-04T06:53:34.755000Z",
+    "event_id": "evt_192b57",
+    "stage": "RECOVERY_FULFILLMENT",
+    "action": "RAZORPAY_PAYMENT_CAPTURED",
+    "details": {
+      "event_id": "evt_192b57",
+      "razorpay_payment_id": "pay_192b57_1788504814",
+      "razorpay_plink_id": "plink_192b57_1788504656",
+      "amount_recovered": 4999.0,
+      "payment_method": "upi",
+      "status": "RECOVERED",
+      "timestamp": "2026-09-04T06:53:34.755000Z"
+    }
+  },
+  {
+    "timestamp": "2026-09-04T06:56:02.736057Z",
+    "event_id": "evt_192b57",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_192b57_1788504962",
+      "event_id": "evt_192b57",
+      "customer_name": "Valued Customer",
+      "amount_inr": 4999.0,
+      "short_url": "https://rzp.io/i/rec_192b57",
+      "status": "created",
+      "created_at": 1788504962.7360575,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-04T07:01:01.213546Z",
+    "event_id": "evt_192b57",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_192b57_1788505261",
+      "event_id": "evt_192b57",
+      "customer_name": "Valued Customer",
+      "amount_inr": 4999.0,
+      "short_url": "https://rzp.io/i/rec_192b57",
+      "status": "created",
+      "created_at": 1788505261.2135463,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-04T07:35:43.033977Z",
+    "event_id": "evt_1f66a7",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_1f66a7_1788507343",
+      "event_id": "evt_1f66a7",
+      "customer_name": "Valued Customer",
+      "amount_inr": 4999.0,
+      "short_url": "https://rzp.io/i/rec_1f66a7",
+      "status": "created",
+      "created_at": 1788507343.0339775,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-04T07:48:23.289279Z",
+    "event_id": "evt_192b57",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_192b57_1788508103",
+      "event_id": "evt_192b57",
+      "customer_name": "Valued Customer",
+      "amount_inr": 4999.0,
+      "short_url": "https://rzp.io/i/rec_192b57",
+      "status": "created",
+      "created_at": 1788508103.2892797,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-04T07:48:25.760649Z",
+    "event_id": "evt_24265d",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_24265d_1788508105",
+      "event_id": "evt_24265d",
+      "customer_name": "Valued Customer",
+      "amount_inr": 4999.0,
+      "short_url": "https://rzp.io/i/rec_24265d",
+      "status": "created",
+      "created_at": 1788508105.7606492,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-04T08:08:30.773428Z",
+    "event_id": "evt_bc1b7",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_bc1b7_1788509310",
+      "event_id": "evt_bc1b7",
+      "customer_name": "Aarav Shah",
+      "amount_inr": 2523.3,
+      "short_url": "https://rzp.io/i/rec_bc1b7",
+      "status": "created",
+      "created_at": 1788509310.7734282,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-04T08:08:53.072871Z",
+    "event_id": "evt_a817c",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_a817c_1788509333",
+      "event_id": "evt_a817c",
+      "customer_name": "Kiara Chopra",
+      "amount_inr": 3069.14,
+      "short_url": "https://rzp.io/i/rec_a817c",
+      "status": "created",
+      "created_at": 1788509333.0728714,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-04T08:11:45.656696Z",
+    "event_id": "evt_7aea1",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_7aea1_1788509505",
+      "event_id": "evt_7aea1",
+      "customer_name": "Diya Kumar",
+      "amount_inr": 14580.64,
+      "short_url": "https://rzp.io/i/rec_7aea1",
+      "status": "created",
+      "created_at": 1788509505.6566963,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-04T08:20:27.703166Z",
+    "event_id": "evt_bc1b7",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_bc1b7_1788510027",
+      "event_id": "evt_bc1b7",
+      "customer_name": "Aarav Shah",
+      "amount_inr": 2523.3,
+      "short_url": "https://rzp.io/i/rec_bc1b7",
+      "status": "created",
+      "created_at": 1788510027.7031667,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-04T09:54:59.272197Z",
+    "event_id": "evt_bc1b7",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_bc1b7_1788515699",
+      "event_id": "evt_bc1b7",
+      "customer_name": "Aarav Shah",
+      "amount_inr": 2523.3,
+      "short_url": "https://rzp.io/i/rec_bc1b7",
+      "status": "created",
+      "created_at": 1788515699.2721975,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-04T10:00:25.503755Z",
+    "event_id": "evt_bc1b7",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_bc1b7_1788516025",
+      "event_id": "evt_bc1b7",
+      "customer_name": "Aarav Shah",
+      "amount_inr": 2523.3,
+      "short_url": "https://rzp.io/i/rec_bc1b7",
+      "status": "created",
+      "created_at": 1788516025.503755,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-04T10:04:00.677524Z",
+    "event_id": "evt_bc1b7",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_bc1b7_1788516240",
+      "event_id": "evt_bc1b7",
+      "customer_name": "Aarav Shah",
+      "amount_inr": 2523.3,
+      "short_url": "https://rzp.io/i/rec_bc1b7",
+      "status": "created",
+      "created_at": 1788516240.6775246,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-04T10:04:10.672231Z",
+    "event_id": "evt_bc1b7",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_bc1b7_1788516250",
+      "event_id": "evt_bc1b7",
+      "customer_name": "Aarav Shah",
+      "amount_inr": 2523.3,
+      "short_url": "https://rzp.io/i/rec_bc1b7",
+      "status": "created",
+      "created_at": 1788516250.672231,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-04T10:04:46.348638Z",
+    "event_id": "evt_bc1b7",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_bc1b7_1788516286",
+      "event_id": "evt_bc1b7",
+      "customer_name": "Aarav Shah",
+      "amount_inr": 2523.3,
+      "short_url": "https://rzp.io/i/rec_bc1b7",
+      "status": "created",
+      "created_at": 1788516286.3486383,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-04T10:14:04.819659Z",
+    "event_id": "evt_bc1b7",
+    "stage": "RECOVERY_FULFILLMENT",
+    "action": "RAZORPAY_PAYMENT_CAPTURED",
+    "details": {
+      "event_id": "evt_bc1b7",
+      "razorpay_payment_id": "pay_bc1b7_1788516844",
+      "razorpay_plink_id": "plink_evt_bc1b7",
+      "amount_recovered": 5000.0,
+      "payment_method": "upi",
+      "status": "RECOVERED",
+      "timestamp": "2026-09-04T10:14:04.819659Z"
+    }
+  },
+  {
+    "timestamp": "2026-09-05T04:41:06.384951Z",
+    "event_id": "evt_00cd65",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_00cd65_1788583266",
+      "event_id": "evt_00cd65",
+      "customer_name": "Arjun Mehta",
+      "amount_inr": 12500.0,
+      "short_url": "https://rzp.io/i/rec_00cd65",
+      "status": "created",
+      "created_at": 1788583266.3849514,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-05T04:41:06.387925Z",
+    "event_id": "evt_00cd65",
+    "stage": "RECOVERY_FULFILLMENT",
+    "action": "RAZORPAY_PAYMENT_CAPTURED",
+    "details": {
+      "event_id": "evt_00cd65",
+      "razorpay_payment_id": "pay_00cd65_1788583266",
+      "razorpay_plink_id": "plink_00cd65_1788583266",
+      "amount_recovered": 12500.0,
+      "payment_method": "card",
+      "status": "RECOVERED",
+      "timestamp": "2026-09-05T04:41:06.387925Z"
+    }
+  },
+  {
+    "timestamp": "2026-09-05T04:42:10.286665Z",
+    "event_id": "evt_f78ead",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_f78ead_1788583330",
+      "event_id": "evt_f78ead",
+      "customer_name": "Arjun Mehta",
+      "amount_inr": 12500.0,
+      "short_url": "https://rzp.io/i/rec_f78ead",
+      "status": "created",
+      "created_at": 1788583330.286665,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-05T04:42:10.314374Z",
+    "event_id": "evt_f78ead",
+    "stage": "RECOVERY_FULFILLMENT",
+    "action": "RAZORPAY_PAYMENT_CAPTURED",
+    "details": {
+      "event_id": "evt_f78ead",
+      "razorpay_payment_id": "pay_f78ead_1788583330",
+      "razorpay_plink_id": "plink_f78ead_1788583330",
+      "amount_recovered": 12500.0,
+      "payment_method": "card",
+      "status": "RECOVERED",
+      "timestamp": "2026-09-05T04:42:10.314374Z"
+    }
+  },
+  {
+    "timestamp": "2026-09-05T04:42:10.813794Z",
+    "event_id": "evt_46720a",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_46720a_1788583330",
+      "event_id": "evt_46720a",
+      "customer_name": "Priya Das",
+      "amount_inr": 3500.0,
+      "short_url": "https://rzp.io/i/rec_46720a",
+      "status": "created",
+      "created_at": 1788583330.8137944,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-05T04:42:10.832992Z",
+    "event_id": "evt_46720a",
+    "stage": "RECOVERY_FULFILLMENT",
+    "action": "RAZORPAY_PAYMENT_CAPTURED",
+    "details": {
+      "event_id": "evt_46720a",
+      "razorpay_payment_id": "pay_46720a_1788583330",
+      "razorpay_plink_id": "plink_46720a_1788583330",
+      "amount_recovered": 3500.0,
+      "payment_method": "card",
+      "status": "RECOVERED",
+      "timestamp": "2026-09-05T04:42:10.832992Z"
+    }
+  },
+  {
+    "timestamp": "2026-09-05T04:42:11.354666Z",
+    "event_id": "evt_ce5369",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_ce5369_1788583331",
+      "event_id": "evt_ce5369",
+      "customer_name": "Rohan Nair",
+      "amount_inr": 8900.0,
+      "short_url": "https://rzp.io/i/rec_ce5369",
+      "status": "created",
+      "created_at": 1788583331.3546662,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-05T04:42:11.382844Z",
+    "event_id": "evt_ce5369",
+    "stage": "RECOVERY_FULFILLMENT",
+    "action": "RAZORPAY_PAYMENT_CAPTURED",
+    "details": {
+      "event_id": "evt_ce5369",
+      "razorpay_payment_id": "pay_ce5369_1788583331",
+      "razorpay_plink_id": "plink_ce5369_1788583331",
+      "amount_recovered": 8900.0,
+      "payment_method": "card",
+      "status": "RECOVERED",
+      "timestamp": "2026-09-05T04:42:11.382844Z"
+    }
+  },
+  {
+    "timestamp": "2026-09-05T04:42:11.896647Z",
+    "event_id": "evt_a904e0",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_a904e0_1788583331",
+      "event_id": "evt_a904e0",
+      "customer_name": "Kavita Iyer",
+      "amount_inr": 1999.0,
+      "short_url": "https://rzp.io/i/rec_a904e0",
+      "status": "created",
+      "created_at": 1788583331.8966472,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-05T04:42:15.407725Z",
+    "event_id": "evt_2f8e93",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_2f8e93_1788583335",
+      "event_id": "evt_2f8e93",
+      "customer_name": "Aarav Gupta",
+      "amount_inr": 18750.0,
+      "short_url": "https://rzp.io/i/rec_2f8e93",
+      "status": "created",
+      "created_at": 1788583335.4077258,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-05T04:42:15.427184Z",
+    "event_id": "evt_2f8e93",
+    "stage": "RECOVERY_FULFILLMENT",
+    "action": "RAZORPAY_PAYMENT_CAPTURED",
+    "details": {
+      "event_id": "evt_2f8e93",
+      "razorpay_payment_id": "pay_2f8e93_1788583335",
+      "razorpay_plink_id": "plink_2f8e93_1788583335",
+      "amount_recovered": 18750.0,
+      "payment_method": "card",
+      "status": "RECOVERED",
+      "timestamp": "2026-09-05T04:42:15.427184Z"
+    }
+  },
+  {
+    "timestamp": "2026-09-05T04:43:25.768256Z",
+    "event_id": "evt_90bf80",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_90bf80_1788583405",
+      "event_id": "evt_90bf80",
+      "customer_name": "Demo Customer",
+      "amount_inr": 5400.0,
+      "short_url": "https://rzp.io/i/rec_90bf80",
+      "status": "created",
+      "created_at": 1788583405.7682567,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-05T04:44:36.799373Z",
+    "event_id": "evt_4644a2",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_4644a2_1788583476",
+      "event_id": "evt_4644a2",
+      "customer_name": "Demo Customer",
+      "amount_inr": 5400.0,
+      "short_url": "https://rzp.io/i/rec_4644a2",
+      "status": "created",
+      "created_at": 1788583476.7993734,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-05T04:44:53.255063Z",
+    "event_id": "evt_2f8e93",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_2f8e93_1788583493",
+      "event_id": "evt_2f8e93",
+      "customer_name": "Aarav Gupta",
+      "amount_inr": 18750.0,
+      "short_url": "https://rzp.io/i/rec_2f8e93",
+      "status": "created",
+      "created_at": 1788583493.2550635,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-05T04:45:23.176146Z",
+    "event_id": "evt_a904e0",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_a904e0_1788583523",
+      "event_id": "evt_a904e0",
+      "customer_name": "Kavita Iyer",
+      "amount_inr": 1999.0,
+      "short_url": "https://rzp.io/i/rec_a904e0",
+      "status": "created",
+      "created_at": 1788583523.1761463,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-05T05:14:50.815615Z",
+    "event_id": "evt_4644a2",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_4644a2_1788585290",
+      "event_id": "evt_4644a2",
+      "customer_name": "Demo Customer",
+      "amount_inr": 5400.0,
+      "short_url": "https://rzp.io/i/rec_4644a2",
+      "status": "created",
+      "created_at": 1788585290.815615,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-05T05:14:54.510477Z",
+    "event_id": "evt_4644a2",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_4644a2_1788585294",
+      "event_id": "evt_4644a2",
+      "customer_name": "Demo Customer",
+      "amount_inr": 5400.0,
+      "short_url": "https://rzp.io/i/rec_4644a2",
+      "status": "created",
+      "created_at": 1788585294.5104773,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  },
+  {
+    "timestamp": "2026-09-05T05:15:05.220880Z",
+    "event_id": "evt_4644a2",
+    "stage": "INTERVENTION_EXECUTION",
+    "action": "RAZORPAY_LINK_CREATED",
+    "details": {
+      "plink_id": "plink_4644a2_1788585305",
+      "event_id": "evt_4644a2",
+      "customer_name": "Demo Customer",
+      "amount_inr": 5400.0,
+      "short_url": "https://rzp.io/i/rec_4644a2",
+      "status": "created",
+      "created_at": 1788585305.220881,
+      "provider": "Razorpay_Gateway_Simulator"
+    }
+  }
+]
